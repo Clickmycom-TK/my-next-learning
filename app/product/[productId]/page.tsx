@@ -1,12 +1,12 @@
 import React from 'react'
 
 type ProductIdPageProps = { 
-  params: { productId: string }; //params ตั้งใช้คำนี้เท่านั้นแล้วจะสามารถรับค่าจาก URL ได้
+  productIdParam: { productId: string }; //params ตั้งใช้คำนี้เท่านั้นแล้วจะสามารถรับค่าจาก URL ได้
   searchParams?: Record<string, string | string[] | undefined>;
 };
 
-export default function ProductIdPage({ params, searchParams }: ProductIdPageProps) {
-    const { productId } = params;
+export default function ProductIdPage({ productIdParam, searchParams }: ProductIdPageProps) {
+    const { productId } = productIdParam;
     const search = searchParams?.search;
     const page = searchParams?.page;
 
@@ -15,9 +15,31 @@ export default function ProductIdPage({ params, searchParams }: ProductIdPagePro
     console.log("page: "+page);
     
   return (
-    <div>ProductIdPage</div>
+    <>
+        <div>ProductIdPage</div>
+        
+        <p>productId: {productId}</p>
+        <p>search: {search}</p>
+        <p>page: {page}</p>
+        <hr></hr>
+        <p>ส่ง props ชื่อ params ไปให้ component ProductionChild ค่าที่ส่งไปก็คือ object ที่ชื่อว่า params จาก parent (ProductIdPage)</p>
+        <ProductionChild params={productIdParam}/> 
+        
+    </>
+    
   )
 
+}
+
+
+function ProductionChild({params}: {params: { productId: string }}){
+    const { productId } = params;
+    return (
+        <>
+            <div>ProductChild</div>
+            <p>productId-Child: {productId}</p>
+        </>
+    )
 }
 
 //route: product/1
